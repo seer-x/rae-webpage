@@ -3,12 +3,519 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Risk Aggregation Engine</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Risk Aggregation Engine - FRC</title>
+    <meta name="description" content="Risk Aggregation Engine by Fauchere Reinsurance Consulting - Control and agility in capital management">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --dark-azure: #002E4C;
+            --light-azure: #194C7F;
+            --white: #ffffff;
+            --light-gray: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-azure);
+            background-color: var(--white);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--dark-azure) 0%, var(--light-azure) 100%);
+            color: var(--white);
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .logo {
+            max-width: 120px;
+            height: auto;
+            margin-bottom: 1rem;
+            filter: brightness(0) invert(1);
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 46, 76, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            padding: 1rem 0;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-links a {
+            color: var(--dark-azure);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background-color: var(--light-azure);
+            color: var(--white);
+        }
+
+        /* Main sections */
+        section {
+            padding: 3rem 0;
+        }
+
+        .section-alt {
+            background-color: var(--light-gray);
+        }
+
+        h2 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: var(--dark-azure);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        h3 {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--light-azure);
+            margin-bottom: 1rem;
+        }
+
+        /* Grid layouts */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 46, 76, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .benefits-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .benefit-item {
+            background: var(--white);
+            padding: 1.5rem;
+            border-left: 4px solid var(--light-azure);
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 10px rgba(0, 46, 76, 0.05);
+        }
+
+        /* Company info */
+        .company-info {
+            background: linear-gradient(135deg, var(--light-azure) 0%, var(--dark-azure) 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .team-member {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Contact section */
+        .contact {
+            background-color: var(--dark-azure);
+            color: var(--white);
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .contact-item a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            opacity: 0.8;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .nav-links a {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            section {
+                padding: 2rem 0;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }        /* Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Email obfuscation */
+        .email-obfuscated {
+            unicode-bidi: bidi-override;
+            direction: rtl;
+        }
+
+        .email-part {
+            display: none;
+        }
+
+        .email-wrapper:hover .email-part {
+            display: inline;
+        }
+
+        .email-wrapper::before {
+            content: "Click to reveal email";
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }        .email-wrapper {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .email-wrapper:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    </style>
 </head>
 <body>
-    <h1>Attention!</h1>
-    <p>Website under construction</p>
-    <script src="script.js"></script>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1>Risk Aggregation Engine</h1>
+            <p class="subtitle">Control and agility in capital management</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="nav-container">
+                <ul class="nav-links">
+                    <li><a href="#overview">Overview</a></li>
+                    <li><a href="#benefits">Benefits</a></li>
+                    <li><a href="#solution">Our Solution</a></li>
+                    <li><a href="#company">About FRC</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Overview Section -->
+    <section id="overview">
+        <div class="container">
+            <h2>The Challenge in Risk Management</h2>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <h3>Economic Capital Requirements</h3>
+                    <p>Determine economic capital requirements for the group and by line of business with precision and confidence.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <h3>Regulatory Compliance</h3>
+                    <p>Meet solvency and regulatory capital model requirements while maintaining efficient capital management.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <h3>Portfolio Strategy</h3>
+                    <p>Support portfolio strategy and capital adequacy planning with sophisticated risk assessment tools.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <h3>Diversification Benefits</h3>
+                    <p>Capture dependencies between business lines and quantify diversification benefits accurately.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="section-alt">
+        <div class="container">
+            <h2>Benefits of Risk Aggregation Engine</h2>
+            <div class="benefits-list">
+                <div class="benefit-item fade-in">
+                    <h3>Market Leader Approach</h3>
+                    <p>Based on aggregation of bottom-up loss scenario sets by line of business, following industry best practices.</p>
+                </div>
+                <div class="benefit-item fade-in">
+                    <h3>Powerful Yet Simple</h3>
+                    <p>Aggregate loss and result distributions across LOBs using pricing loss scenario sets from vendor or internal tools.</p>
+                </div>
+                <div class="benefit-item fade-in">
+                    <h3>Flexible Framework</h3>
+                    <p>Universal copula framework captures dependencies via hierarchical risk aggregation tree, reflecting your specific business mix.</p>
+                </div>
+                <div class="benefit-item fade-in">
+                    <h3>Enhanced Reporting</h3>
+                    <p>Support regulatory, rating agency, and economic risk management reporting while enabling business steering decisions.</p>
+                </div>
+                <div class="benefit-item fade-in">
+                    <h3>Capital Optimization</h3>
+                    <p>Apply retrocession structures to optimize capital efficiency and identify concentration risks.</p>
+                </div>
+                <div class="benefit-item fade-in">
+                    <h3>Immediate Availability</h3>
+                    <p>Available as desktop application or web-based API with no upfront development costs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solution">
+        <div class="container">
+            <h2>FRC RAE Suite</h2>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <h3>Flexible Inputs</h3>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                        <li>Aggregate Loss Scenario sets by LOB</li>
+                        <li>Peril Loss Event sets by LOB</li>
+                        <li>Hierarchical aggregate tree definition</li>
+                    </ul>
+                </div>
+                <div class="feature-card fade-in">
+                    <h3>Multiple Copula Functions</h3>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                        <li>Normal copula</li>
+                        <li>Student-t copula</li>
+                        <li>Independent copula</li>
+                        <li>Comonotonic copula</li>
+                    </ul>
+                </div>
+                <div class="feature-card fade-in">
+                    <h3>Deployment Options</h3>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                        <li>Desktop application</li>
+                        <li>Web-based API</li>
+                        <li>Licensing agreement</li>
+                        <li>No upfront development costs</li>
+                    </ul>
+                </div>
+                <div class="feature-card fade-in">
+                    <h3>Customization</h3>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                        <li>Company-specific reporting</li>
+                        <li>Forward-compatible updates</li>
+                        <li>Easy testing and integration</li>
+                        <li>Parallel implementation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Company Section -->
+    <section id="company" class="company-info">
+        <div class="container">
+            <h2>About Fauchere Reinsurance Consulting</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">
+                Founded in 2016, FRC specializes in developing and applying pricing and portfolio management tools in reinsurance.
+            </p>
+            <div class="team-grid">
+                <div class="team-member fade-in">
+                    <h3>Alban Fauchere</h3>
+                    <p><strong>Experience:</strong> Swiss Re (2003-2009), Ariel Re/Arch Re (2009-2012), Lloyds (2013-16)</p>
+                </div>
+                <div class="team-member fade-in">
+                    <h3>Valerio Gianella</h3>
+                    <p><strong>Experience:</strong> Lifeware (2017-19), Axis Re (2020-23)</p>
+                </div>
+            </div>
+            <p style="margin-top: 2rem; font-size: 1.1rem;">
+                <strong>10+ (re)insurers and brokers worldwide</strong> currently using FRC tool suite and services
+            </p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Get in Touch</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem;">
+                Ready to enhance your risk management capabilities? Contact us for more information.
+            </p>            <div class="contact-info">
+                <div class="contact-item">
+                    <strong>Alban Fauchere</strong>
+                    <div class="email-wrapper">
+                        <span class="email-part email-obfuscated">hc.crfa@erehcuaf.nabla</span>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <strong>Valerio Gianella</strong>
+                    <div class="email-wrapper">
+                        <span class="email-part email-obfuscated">hc.crfa@alleinalg.oirelav</span>
+                    </div>
+                </div>
+            </div>
+            <p style="margin-top: 2rem; opacity: 0.8;">
+                Fauchere Reinsurance Consulting LLC<br>
+                Zürich, Switzerland
+            </p>
+        </div>
+    </section>
+
+    <script>
+        // Simple animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationDelay = '0.2s';
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Email reveal functionality
+        document.querySelectorAll('.email-wrapper').forEach(wrapper => {
+            wrapper.addEventListener('click', function() {
+                const emailSpan = this.querySelector('.email-obfuscated');
+                if (emailSpan) {
+                    const reversedEmail = emailSpan.textContent;
+                    const actualEmail = reversedEmail.split('').reverse().join('');
+                    
+                    // Create clickable email link
+                    const emailLink = document.createElement('a');
+                    emailLink.href = 'mailto:' + actualEmail;
+                    emailLink.textContent = actualEmail;
+                    emailLink.style.color = 'var(--white)';
+                    emailLink.style.textDecoration = 'none';
+                    emailLink.style.fontSize = '1.1rem';
+                    emailLink.addEventListener('mouseover', function() {
+                        this.style.opacity = '0.8';
+                    });
+                    emailLink.addEventListener('mouseout', function() {
+                        this.style.opacity = '1';
+                    });
+                    
+                    // Replace the wrapper content
+                    this.innerHTML = '';
+                    this.appendChild(emailLink);
+                    this.style.cursor = 'default';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
